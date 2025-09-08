@@ -51,3 +51,8 @@ npx npm-add-script -k "format" -v "prettier --write ."
 npx npm-add-script -k "test" -v "jest"
 ```
 
+### In order to run server:
+``` 
+nvm use
+npm run dev
+``` 
