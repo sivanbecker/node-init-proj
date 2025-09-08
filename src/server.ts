@@ -1,7 +1,6 @@
-import fastify from 'fastify';
-import swagger from '@fastify/swagger';
-
-const server = fastify({ logger: true });
+import Fastify from 'fastify';
+// import swagger from '@fastify/swagger';
+import run from './app';
 
 // server.register(swagger, {
 //   swagger: {
@@ -10,18 +9,18 @@ const server = fastify({ logger: true });
 //   exposeRoute: true,
 // });
 
-server.get('/ping', async () => {
-  return { pong: 'it worked!' };
-});
+// server.get('/ping', async () => {
+//   return { pong: 'it worked!' };
+// });
 
-const start = async () => {
+async function start() {
   try {
-    await server.listen({ port: 3000 });
-    console.log('Server running at http://localhost:3000');
-  } catch (err) {
-    server.log.error(err);
-    process.exit(1);
+    const app = await run;
+    await app.start();
+  } catch (err: any) {
+    // handleError(err);
+    console.log(err);
   }
-};
+}
 
 start();
