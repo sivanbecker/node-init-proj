@@ -4,6 +4,7 @@ import Fastify, { FastifyInstance } from 'fastify';
 type WebAppConfig = {
   name: string;
   port: number;
+  host: string;
 };
 
 class WebApp {
@@ -22,7 +23,7 @@ class WebApp {
     this.app.get('/', async (request, reply) => {
       return { message: 'Hello World!', status: 'Server is running' };
     });
-    
+
     this.app.get('/ping', async (request, reply) => {
       return { pong: 'it worked!' };
     });
@@ -30,8 +31,8 @@ class WebApp {
 
   async start(): Promise<void> {
     try {
-      await this.app.listen({ port: this.config.port });
-      console.log('Server running at http://localhost:3000');
+      await this.app.listen({ port: this.config.port, host: this.config.host });
+      console.log(`Server running at http://${this.config.host}:${this.config.port}`);
     } catch (err) {
       console.log(err);
       process.exit(1);
@@ -44,7 +45,8 @@ async function createWebApp() {
 
   const app = new WebApp({
     name: 'base-app',
-    port: 3000,
+    port: Number(process.env.PORT) || 3000,
+    host: process.env.HOST || '0.0.0.0',
   });
   // addRoutes(app);
   return app;
