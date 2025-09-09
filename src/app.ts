@@ -27,6 +27,10 @@ class WebApp {
     this.app.get('/ping', async (request, reply) => {
       return { pong: 'it worked!' };
     });
+
+    this.app.get('/healthz', async (request, reply) => {
+      return { status: 'ok' };
+    });
   }
 
   async start(): Promise<void> {
